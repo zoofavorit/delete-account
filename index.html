@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запит на видалення акаунта</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #333;
+        }
+        p.notice {
+            font-size: 14px;
+            color: #856404;
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        input:focus, textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+        textarea {
+            min-height: 120px;
+            resize: none;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+        }
+        .checkbox-group label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        button {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 12px;
+            background: #ff4d4f;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #e33a3c;
+        }
+        .footer {
+            font-size: 12px;
+            margin-top: 16px;
+            color: #777;
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Запит на видалення акаунта</h1>
+        <p class="notice">Ця дія є остаточною та не може бути скасована. Будьте уважні.</p>
+        
+        <form id="deletionForm">
+            <div class="form-group">
+                <label for="confirmEmail">Ваша електронна адреса:</label>
+                <input type="email" id="confirmEmail" placeholder="Введіть вашу електронну адресу" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="reason">Причина видалення (необов’язково):</label>
+                <textarea id="reason" placeholder="Розкажіть, чому ви вирішили піти..."></textarea>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="confirmCheck" required>
+                <label for="confirmCheck">Я розумію, що ця дія є незворотною</label>
+            </div>
+            
+            <button type="submit">Запросити видалення акаунта</button>
+        </form>
+        
+        <div class="footer">Якщо у вас виникли проблеми, зв’яжіться з <a href="mailto:zoofavorit1@gmail.com">zoofavorit1@gmail.com</a></div>
+    </div>
+
+    <script>
+        document.getElementById('deletionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const confirmEmail = document.getElementById('confirmEmail').value;
+            const reason = document.getElementById('reason').value;
+            const supportEmail = 'zoofavorit1@gmail.com';
+            
+            if (!validateEmail(confirmEmail)) {
+                alert('Будь ласка, введіть дійсну електронну адресу.');
+                return;
+            }
+            
+            const emailBody = `Запит на видалення акаунта\n\n` +
+                `Я прошу видалити акаунт, пов’язаний із цією електронною адресою: ${confirmEmail}\n\n` +
+                (reason ? `Причина видалення: ${reason}\n\n` : '') +
+                `Будь ласка, обробіть цей запит на видалення акаунта відповідно до вашої політики конфіденційності та норм захисту даних.`;
+            
+            const mailtoLink = `mailto:${supportEmail}` +
+                `?subject=Запит на видалення акаунта - ${confirmEmail}` +
+                `&body=${encodeURIComponent(emailBody)}`;
+            
+            window.location.href = mailtoLink;
+            alert('Ваш запит на видалення акаунта підготовлено. Будь ласка, надішліть лист через ваш поштовий клієнт.');
+        });
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        }
+    </script>
+</body>
+</html>
+
+
